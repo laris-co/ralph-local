@@ -23,8 +23,8 @@ Implementation of the Ralph Wiggum technique for iterative, self-referential AI 
 
 ---
 
-<details>
-<summary>🤖 <strong>AI Assistant Installation Prompt</strong> (click to expand)</summary>
+<details open>
+<summary>🤖 <strong>AI Assistant Installation Prompt</strong></summary>
 
 ```
 Install the ralph-local plugin for iterative AI development loops.

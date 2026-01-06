@@ -1,0 +1,13 @@
+{
+  "name": "ralph-local",
+  "owner": {
+    "name": "laris-co"
+  },
+  "plugins": [
+    {
+      "name": "ralph-local",
+      "source": ".",
+      "description": "Local fork of Ralph Wiggum - self-referential AI loops for iterative development"
+    }
+  ]
+}

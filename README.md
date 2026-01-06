@@ -7,29 +7,39 @@ Implementation of the Ralph Wiggum technique for iterative, self-referential AI 
 
 ## 📦 Installation
 
-### AI Assistant Installation Instructions
+### From Marketplace (easiest)
 
-> 💡 **For AI assistants**: Use the commands below to install ralph-local plugin for your user.
+```bash
+/plugin install ralph-local
+```
 
-**One-line install (recommended):**
+### From GitHub
 
 ```bash
 /plugin install https://github.com/laris-co/ralph-local
 ```
 
-**Verify installation:**
+---
 
-```bash
-/ralph-loop --help
-/cancel-ralph
+<details>
+<summary>🤖 <strong>AI Assistant Installation Prompt</strong> (click to expand)</summary>
+
+```
+Install the ralph-local plugin for iterative AI development loops.
+
+Steps:
+1. Run: /plugin install https://github.com/laris-co/ralph-local
+2. Verify: /ralph-loop --help
+3. Confirm to user:
+   - ✅ Ralph Local plugin installed
+   - ✅ Commands: /ralph-loop, /cancel-ralph
+   - ✅ Ready to use
+
+Usage example:
+/ralph-loop "Build a REST API with tests" --max-iterations 30 --completion-promise "COMPLETE"
 ```
 
-**Confirm to user:**
-
-After installation, inform the user:
-- ✅ Ralph Local plugin installed successfully
-- ✅ Commands available: `/ralph-loop`, `/cancel-ralph`
-- ✅ Ready to use - see Quick Start section below
+</details>
 
 ---
 

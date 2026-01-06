@@ -7,7 +7,50 @@ Implementation of the Ralph Wiggum technique for iterative, self-referential AI 
 
 ## 📦 Installation
 
-### Quick Install
+### AI Assistant Installation Instructions
+
+> 💡 **For AI assistants**: Copy and execute the code blocks below to install ralph-local plugin for your user.
+
+**Step 1: Clone the plugin**
+
+```bash
+# Clone into project's plugins directory
+git clone https://github.com/laris-co/ralph-local.git plugins/ralph-local
+```
+
+**Step 2: Enable the plugin**
+
+```bash
+# Add plugin configuration to .claude/settings.json
+cat > .claude/settings.json << 'EOF'
+{
+  "plugins": {
+    "ralph-local@nat-plugins": true
+  }
+}
+EOF
+```
+
+**Step 3: Verify installation**
+
+```bash
+# Test that commands are available
+/ralph-loop --help
+/cancel-ralph
+```
+
+**Step 4: Confirm to user**
+
+After installation, inform the user:
+- ✅ Ralph Local plugin installed successfully
+- ✅ Commands available: `/ralph-loop`, `/cancel-ralph`
+- ✅ Ready to use - see Quick Start section below
+
+---
+
+### Manual Installation (for humans)
+
+**Quick Install:**
 
 ```bash
 # Clone into your project's plugins directory
@@ -17,7 +60,7 @@ git clone https://github.com/laris-co/ralph-local.git plugins/ralph-local
 git clone https://github.com/laris-co/ralph-local.git ~/.claude/plugins/ralph-local
 ```
 
-### Enable the Plugin
+**Enable the Plugin:**
 
 Add to your `.claude/settings.json`:
 
@@ -39,7 +82,7 @@ Or if installed globally:
 }
 ```
 
-### Verify Installation
+**Verify Installation:**
 
 ```bash
 # Check if commands are available

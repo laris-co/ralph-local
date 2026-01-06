@@ -45,50 +45,6 @@ Usage example:
 
 ---
 
-### Manual Installation (for humans)
-
-**Quick Install:**
-
-```bash
-# Clone into your project's plugins directory
-git clone https://github.com/laris-co/ralph-local.git plugins/ralph-local
-
-# Or install globally for all Claude Code projects
-git clone https://github.com/laris-co/ralph-local.git ~/.claude/plugins/ralph-local
-```
-
-**Enable the Plugin:**
-
-Add to your `.claude/settings.json`:
-
-```json
-{
-  "plugins": {
-    "ralph-local@nat-plugins": true
-  }
-}
-```
-
-Or if installed globally:
-
-```json
-{
-  "plugins": {
-    "ralph-local": true
-  }
-}
-```
-
-**Verify Installation:**
-
-```bash
-# Check if commands are available
-/ralph-loop --help
-/cancel-ralph
-```
-
----
-
 ## 🚀 Quick Start
 
 ```bash

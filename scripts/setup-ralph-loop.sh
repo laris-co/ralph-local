@@ -2,8 +2,29 @@
 
 # Ralph Loop Setup Script
 # Creates state file for in-session Ralph loop
+# Now with session isolation - each session has its own state file
 
 set -euo pipefail
+
+# Determine state directory (plugin-relative for session isolation)
+if [[ -n "${CLAUDE_PLUGIN_ROOT:-}" ]]; then
+  STATE_DIR="$CLAUDE_PLUGIN_ROOT/state"
+else
+  # Fallback: derive from script location
+  STATE_DIR="$(dirname "$(dirname "$0")")/state"
+fi
+
+# Get session ID (required for session isolation)
+if [[ -z "${CLAUDE_SESSION_ID:-}" ]]; then
+  echo "❌ Error: CLAUDE_SESSION_ID not available" >&2
+  echo "   Ralph loop requires session isolation to work correctly." >&2
+  echo "   This usually means the SessionStart hook didn't run." >&2
+  echo "" >&2
+  echo "   Try:" >&2
+  echo "   1. Restart Claude Code" >&2
+  echo "   2. Check plugin is properly installed" >&2
+  exit 1
+fi
 
 # Parse arguments
 PROMPT_PARTS=()
@@ -50,11 +71,8 @@ STOPPING:
   No manual stop - Ralph runs infinitely by default!
 
 MONITORING:
-  # View current iteration:
-  grep '^iteration:' .claude/ralph-loop.local.md
-
-  # View full state:
-  head -10 .claude/ralph-loop.local.md
+  State files are stored in the plugin's state/ directory with session ID.
+  The exact path is shown when the loop starts.
 HELP_EOF
       exit 0
       ;;
@@ -127,8 +145,9 @@ if [[ -z "$PROMPT" ]]; then
   exit 1
 fi
 
-# Create state file for stop hook (markdown with YAML frontmatter)
-mkdir -p .claude
+# Create state directory and file
+mkdir -p "$STATE_DIR"
+RALPH_STATE_FILE="$STATE_DIR/${CLAUDE_SESSION_ID}.md"
 
 # Quote completion promise for YAML if it contains special chars or is not null
 if [[ -n "$COMPLETION_PROMISE" ]] && [[ "$COMPLETION_PROMISE" != "null" ]]; then
@@ -137,13 +156,14 @@ else
   COMPLETION_PROMISE_YAML="null"
 fi
 
-cat > .claude/ralph-loop.local.md <<EOF
+cat > "$RALPH_STATE_FILE" <<EOF
 ---
 active: true
 iteration: 1
 max_iterations: $MAX_ITERATIONS
 completion_promise: $COMPLETION_PROMISE_YAML
 started_at: "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+session_id: "$CLAUDE_SESSION_ID"
 ---
 
 $PROMPT
@@ -156,12 +176,13 @@ cat <<EOF
 Iteration: 1
 Max iterations: $(if [[ $MAX_ITERATIONS -gt 0 ]]; then echo $MAX_ITERATIONS; else echo "unlimited"; fi)
 Completion promise: $(if [[ "$COMPLETION_PROMISE" != "null" ]]; then echo "${COMPLETION_PROMISE//\"/} (ONLY output when TRUE - do not lie!)"; else echo "none (runs forever)"; fi)
+Session ID: ${CLAUDE_SESSION_ID:0:8}...
 
 The stop hook is now active. When you try to exit, the SAME PROMPT will be
 fed back to you. You'll see your previous work in files, creating a
 self-referential loop where you iteratively improve on the same task.
 
-To monitor: head -10 .claude/ralph-loop.local.md
+To monitor: head -10 "$RALPH_STATE_FILE"
 
 ⚠️  WARNING: This loop cannot be stopped manually! It will run infinitely
     unless you set --max-iterations or --completion-promise.

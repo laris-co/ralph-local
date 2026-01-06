@@ -8,51 +8,36 @@ allowed-tools: ["Bash", "Write"]
 
 Start a self-referential development loop.
 
-## Step 1: Parse arguments
+## Execute
 
-The raw arguments are:
-```
-$ARGUMENTS
-```
+Execute the setup script to initialize the Ralph loop:
 
-Parse them:
-- Extract `--max-iterations N` if present (default: 0 = unlimited)
-- Extract `--completion-promise 'TEXT'` if present (default: null)
-- Everything else is the PROMPT
-
-## Step 2: Create state file
-
-Use the Write tool to create `.claude/ralph-loop.local.md`:
-
-```yaml
----
-active: true
-iteration: 1
-max_iterations: [N or 0]
-completion_promise: "[TEXT]" or null
-started_at: "[ISO timestamp]"
----
-
-[THE PROMPT HERE - preserve special characters like | exactly]
+```bash
+"${CLAUDE_PLUGIN_ROOT}/scripts/setup-ralph-loop.sh" $ARGUMENTS
 ```
 
-## Step 3: Confirm
+## State File Location
 
-Output:
+State files are now stored in the plugin's state directory with session ID for isolation:
+
+```bash
+# State files are stored in the plugin's state directory with session ID
+RALPH_STATE_FILE="${CLAUDE_PLUGIN_ROOT}/state/${CLAUDE_SESSION_ID}.md"
+if [ -f "$RALPH_STATE_FILE" ]; then
+  PROMISE=$(grep '^completion_promise:' "$RALPH_STATE_FILE" | sed 's/completion_promise: *//' | sed 's/^"\(.*\)"$/\1/')
+  if [ -n "$PROMISE" ] && [ "$PROMISE" != "null" ]; then
+    echo ""
+    echo "═══════════════════════════════════════════════════════════"
+    echo "  To complete: output <promise>$PROMISE</promise>"
+    echo "═══════════════════════════════════════════════════════════"
+  fi
+fi
 ```
-🔄 Ralph loop activated!
-
-Iteration: 1
-Max: [N or unlimited]
-Promise: [TEXT or none]
-
-⚠️ Loop runs until promise or max-iterations reached.
-```
-
-Then show the prompt and start working on it.
 
 ## Instructions
 
 Work on the task. When you try to exit, the Ralph loop feeds the SAME PROMPT back. You'll see previous work in files and git history.
 
 **CRITICAL**: If completion promise is set, ONLY output `<promise>TEXT</promise>` when TRUE. Do not lie to escape.
+
+**Session Isolation**: Each Claude Code session has its own state file, so multiple sessions won't interfere with each other.

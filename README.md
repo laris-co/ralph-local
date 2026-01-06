@@ -2,6 +2,8 @@
 
 > **Forked from**: [claude-plugins-official/ralph-wiggum](https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum) (Anthropic)
 > **Enhancements**: Parse error fixes, absolute path support for worktree isolation, Oracle Forum integration
+>
+> 📢 **Upstream PR**: [#15853](https://github.com/anthropics/claude-code/pull/15853) - Session isolation fix contributed back to official plugin
 
 Implementation of the Ralph Wiggum technique for iterative, self-referential AI development loops in Claude Code.
 
@@ -107,10 +109,13 @@ Claude will:
 
 This is a local fork of the official `ralph-wiggum` plugin with the following improvements:
 
-1. **Parse Error Fixes** - Fixed `````!` pattern that broke eval in cancel command
-2. **Worktree Isolation** - Uses absolute paths for multi-agent worktree support
-3. **Oracle Forum Integration** - EXIT_LOOP signal support for multi-agent coordination
-4. **Write Tool** - Uses Write tool instead of bash to preserve special characters
+1. **Session Isolation** - Fixes cross-session interference ([PR #15853](https://github.com/anthropics/claude-code/pull/15853) contributed upstream)
+2. **Parse Error Fixes** - Fixed `````!` pattern that broke eval in cancel command
+3. **Worktree Isolation** - Uses absolute paths for multi-agent worktree support
+4. **Oracle Forum Integration** - EXIT_LOOP signal support for multi-agent coordination
+5. **Write Tool** - Uses Write tool instead of bash to preserve special characters
+
+> 🎉 **Contributing Back**: The session isolation fix has been submitted as [PR #15853](https://github.com/anthropics/claude-code/pull/15853) to the official claude-code repository.
 
 **Credit**: Original concept and implementation by [Geoffrey Huntley](https://ghuntley.com/ralph/) and Anthropic's Claude Code team.
 

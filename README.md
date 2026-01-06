@@ -63,17 +63,42 @@ Claude will:
 
 ## Why This Fork?
 
-This is a local fork of the official `ralph-wiggum` plugin with the following improvements:
+This is a local fork of the official `ralph-wiggum` plugin with significant engineering improvements.
 
-1. **Session Isolation** - Fixes cross-session interference ([PR #15853](https://github.com/anthropics/claude-code/pull/15853) contributed upstream)
-2. **Parse Error Fixes** - Fixed `````!` pattern that broke eval in cancel command
-3. **Worktree Isolation** - Uses absolute paths for multi-agent worktree support
-4. **Oracle Forum Integration** - EXIT_LOOP signal support for multi-agent coordination
-5. **Write Tool** - Uses Write tool instead of bash to preserve special characters
+### 🔧 What We Engineered (laris-co)
 
-> 🎉 **Contributing Back**: The session isolation fix has been submitted as [PR #15853](https://github.com/anthropics/claude-code/pull/15853) to the official claude-code repository.
+| Feature | Description | Files Changed |
+|---------|-------------|---------------|
+| **Extensive Error Handling** | Validates numeric fields, handles corrupt state files gracefully, detailed error messages | `hooks/stop-hook.sh` |
+| **Worktree Isolation** | Uses `CLAUDE_PROJECT_DIR` for multi-agent worktree support (MAW) | `hooks/stop-hook.sh` |
+| **Oracle Forum Integration** | EXIT_LOOP signal support for multi-agent coordination | Pattern documentation |
+| **Write Tool Usage** | Uses Write tool instead of bash to preserve special characters | `commands/ralph-loop.md` |
+| **Parse Error Fixes** | Fixed backtick pattern that broke eval in cancel command | `commands/cancel-ralph.md` |
+| **`/check-updates` Command** | Track upstream changes and PR status | `commands/check-updates.md` |
+| **AI Installation Prompt** | Ready-to-use prompt for AI assistants to install | `README.md` |
+| **Comprehensive Documentation** | 500+ lines of docs with history, examples, troubleshooting | `README.md` |
 
-**Credit**: Original concept and implementation by [Geoffrey Huntley](https://ghuntley.com/ralph/) and Anthropic's Claude Code team.
+### 🔄 Synced from Upstream (PR #15853)
+
+| Feature | Description | Source |
+|---------|-------------|--------|
+| **Session Isolation** | Each session has own state file (`state/${SESSION_ID}.md`) | [PR #15853](https://github.com/anthropics/claude-code/pull/15853) |
+| **SessionStart Hook** | Captures `session_id` and persists as `CLAUDE_SESSION_ID` | [PR #15853](https://github.com/anthropics/claude-code/pull/15853) |
+| **Plugin-relative State** | State files in `${PLUGIN_ROOT}/state/` instead of `.claude/` | [PR #15853](https://github.com/anthropics/claude-code/pull/15853) |
+
+### 📊 Engineering Stats
+
+```
+Total commits: 10
+Lines added: 567+
+Files modified: 8
+New commands: 1 (/check-updates)
+New hooks: 1 (SessionStart)
+```
+
+> 🎉 **Contributing Back**: We merged upstream session isolation from [PR #15853](https://github.com/anthropics/claude-code/pull/15853) while keeping our extensive error handling and multi-agent features.
+
+**Credit**: Original concept by [Geoffrey Huntley](https://ghuntley.com/ralph/). Base implementation by Anthropic's Claude Code team. Enhanced by [laris-co](https://github.com/laris-co).
 
 ---
 

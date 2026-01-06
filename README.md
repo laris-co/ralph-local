@@ -12,7 +12,7 @@ Implementation of the Ralph Wiggum technique for iterative, self-referential AI 
 ### Step 1: Add the marketplace
 
 ```bash
-/plugin marketplace add laris-co/ralph-local
+/plugin marketplace add Soul-Brews-Studio/ralph-local
 ```
 
 ### Step 2: Install the plugin
@@ -25,7 +25,7 @@ Implementation of the Ralph Wiggum technique for iterative, self-referential AI 
 
 ```bash
 # Clone into your project
-git clone https://github.com/laris-co/ralph-local.git plugins/ralph-local
+git clone https://github.com/Soul-Brews-Studio/ralph-local.git plugins/ralph-local
 
 # Add as local marketplace
 /plugin marketplace add ./plugins/ralph-local
@@ -41,7 +41,7 @@ git clone https://github.com/laris-co/ralph-local.git plugins/ralph-local
 Install the ralph-local plugin for iterative AI development loops.
 
 Steps:
-1. Add marketplace: /plugin marketplace add laris-co/ralph-local
+1. Add marketplace: /plugin marketplace add Soul-Brews-Studio/ralph-local
 2. Install plugin: /plugin install ralph-local@ralph-local
 3. Verify: /ralph-loop --help
 4. Confirm to user:
@@ -581,7 +581,7 @@ git pull origin main
 ### Community
 
 - Share your Ralph loop success stories
-- Report issues: https://github.com/laris-co/ralph-local/issues
+- Report issues: https://github.com/Soul-Brews-Studio/ralph-local/issues
 - Contribute improvements via PR
 
 ---
